@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const EcommerceUser = require('../models/EcommerceUser');
 const jwt = require('jsonwebtoken');
 
 const generateToken = (id) => {
@@ -11,12 +11,12 @@ const registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    const userExists = await User.findOne({ email });
+    const userExists = await EcommerceUser.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const user = await User.create({
+    const user = await EcommerceUser.create({
       name,
       email,
       password,
@@ -43,7 +43,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await EcommerceUser.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
       res.json({
